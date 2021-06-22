@@ -1,13 +1,22 @@
 package CRM.Object;
 
+import CRM.DataProcess.InputHandler;
+import CRM.Manager.FileManager;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Scanner;
 
 public class Interaction {
+    private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     private String id;
     private Date interDate;
     private String lead;
     private String mean;
     private String potential;
+
+    public Interaction(){};
 
     public Interaction(String id, Date interDate, String lead, String mean, String potential) {
         this.id = id;
@@ -55,5 +64,10 @@ public class Interaction {
 
     public void setPotential(String potential) {
         this.potential = potential;
+    }
+
+
+    public String toString(){
+        return id + "," + sdf.format(interDate) + "," + lead + "," + mean + "," + potential;
     }
 }

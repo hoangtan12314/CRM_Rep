@@ -1,8 +1,8 @@
 inter_001,2021-06-06,lead_001,email,positive
 inter_002,2020-09-01,lead_002,email,negative
-inter_003,2020-09-05,lead_001,phone,neutral
+inter_003,2019-03-03,lead_003,Facebook,negative
 inter_004,2020-04-11,lead_003,email,positive
-inter_005,2020-03-01,lead_004,email,negative
+inter_005,2020-06-22,lead_002,email,positive
 inter_006,2019-09-05,lead_005,phone,neutral
 inter_007,2019-09-29,lead_003,email,positive
 inter_008,2019-09-01,lead_004,email,positive
