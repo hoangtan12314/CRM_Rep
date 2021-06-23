@@ -38,7 +38,7 @@ public class InteractionManager implements Manager{
         return handler.getDigit(lastidStr)+1;
     }
 
-    public void writeToFile(ArrayList<Interaction> InterList){
+    private void writeToFile(ArrayList<Interaction> InterList){
         File file = new File("interaction.csv");
         FileManager fm = new FileManager();
         try {

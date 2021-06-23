@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.io.File;
 public class FileManager {
-    public Scanner openFile(String Filename){
+    protected Scanner openFile(String Filename){
         File file = new File(Filename);
         try {
             Scanner input = new Scanner(new File(Filename));

@@ -10,8 +10,8 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        InteractionManager im = new InteractionManager();
-        im.delete();
+        LeadManager lm = new LeadManager();
+        lm.viewAll();
 
     }
 }

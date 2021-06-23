@@ -11,6 +11,8 @@ public class Lead {
     private String email;
     private String address;
 
+    public Lead(){}
+
     public Lead(String id, String name, Date dob, String gender, String phone, String email, String address) {
         this.id = id;
         this.name = name;
