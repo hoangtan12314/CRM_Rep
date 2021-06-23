@@ -24,6 +24,7 @@ public class InputHandler {
         return digitPart;
     }
 
+
     public String idGenerator(String prefix, int suffix){
         if (suffix < 10){
             return prefix + "00" + suffix;

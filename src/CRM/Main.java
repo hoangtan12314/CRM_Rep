@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         LeadManager lm = new LeadManager();
-        lm.viewAll();
+        lm.delete();
 
     }
 }

@@ -1,5 +1,6 @@
 package CRM.Object;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Lead {
@@ -10,6 +11,7 @@ public class Lead {
     private String phone;
     private String email;
     private String address;
+    private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
     public Lead(){}
 
@@ -77,5 +79,9 @@ public class Lead {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String toString(){
+        return id + "," + name + "," + sdf.format(dob) + "," + gender + "," + phone + "," + email + "," + address;
     }
 }

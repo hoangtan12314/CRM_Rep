@@ -72,7 +72,7 @@ public class InteractionManager implements Manager{
         Scanner input = new Scanner(System.in);
         InputHandler handler = new InputHandler();
         String id = handler.idGenerator("inter_", getLastID());
-        System.out.println("Enter the date of birth: ");
+        System.out.println("Enter the date of interaction: ");
         String dateStr = input.nextLine();
         Date date = handler.DateConverter(dateStr);
         System.out.println("Enter the id number of the lead involved: ");
