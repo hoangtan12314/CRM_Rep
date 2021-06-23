@@ -1,6 +1,7 @@
 package CRM.Manager;
 
 import CRM.DataProcess.InputHandler;
+import CRM.DataProcess.InputValidate;
 import CRM.Object.Interaction;
 import CRM.Object.Lead;
 
@@ -14,7 +15,6 @@ import java.util.Scanner;
 public class LeadManager implements Manager{
     private final InputHandler handler = new InputHandler();
     private final FileManager fm = new FileManager();
-
     private ArrayList<Lead> getLeadList(){
         InputHandler handler = new InputHandler();
         FileManager fm = new FileManager();
@@ -63,20 +63,33 @@ public class LeadManager implements Manager{
 
     @Override
     public void create() {
+        InputValidate valid = new InputValidate();
+        String email = "";
+        String dateStr = "";
+        String gender = "";
+        String phone = "";
         Scanner input = new Scanner(System.in);
         InputHandler handler = new InputHandler();
         String id = handler.idGenerator("lead_", getLastID());
         System.out.println("Enter the name: ");
         String name = input.nextLine();
-        System.out.println("Enter the date of birth: ");
-        String dateStr = input.nextLine();
+        do {
+            System.out.println("Enter the date of birth: ");
+            dateStr = input.nextLine();
+        } while(!valid.isDateValid(dateStr));
         Date dob = handler.DateConverter(dateStr);
-        System.out.println("Enter the gender: ");
-        String gender = input.nextLine();
-        System.out.println("Enter the phone number: ");
-        String phone = input.nextLine();
-        System.out.println("Enter the email: ");
-        String email = input.nextLine();
+        do {
+            System.out.println("Enter the gender: ");
+            gender = input.nextLine();
+        } while(!valid.isGenderValid(gender));
+        do {
+            System.out.println("Enter the phone number: ");
+            phone = input.nextLine();
+        } while(!valid.isPhoneValid(phone));
+        do {
+            System.out.println("Enter the email: ");
+            email = input.nextLine();
+        } while (!valid.isEmailvalid(email));
         System.out.println("Enter the address: ");
         String address = input.nextLine();
         Lead lead = new Lead(id, name, dob, gender, phone, email, address);
