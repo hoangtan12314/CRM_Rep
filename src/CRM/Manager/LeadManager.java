@@ -15,6 +15,7 @@ import java.util.Scanner;
 public class LeadManager implements Manager{
     private final InputHandler handler = new InputHandler();
     private final FileManager fm = new FileManager();
+
     private ArrayList<Lead> getLeadList(){
         InputHandler handler = new InputHandler();
         FileManager fm = new FileManager();
@@ -36,6 +37,48 @@ public class LeadManager implements Manager{
         Lead finalLead = getLeadList().get(listLength - 1);
         String lastidStr = finalLead.getId();
         return handler.getDigit(lastidStr)+1;
+    }
+
+    private String[] inputRetriever(){
+        InputValidate valid = new InputValidate();
+        String email = "";
+        String dateStr = "";
+        String gender = "";
+        String phone = "";
+        Scanner input = new Scanner(System.in);
+        System.out.println("Enter the name: ");
+        String name = input.nextLine();
+        do {
+            System.out.println("Enter the date of birth: ");
+            dateStr = input.nextLine();
+        } while(!valid.isDateValid(dateStr));
+        Date dob = handler.DateConverter(dateStr);
+        do {
+            System.out.println("Enter the gender: ");
+            gender = input.nextLine();
+        } while(!valid.isGenderValid(gender));
+        do {
+            System.out.println("Enter the phone number: ");
+            phone = input.nextLine();
+        } while(!valid.isPhoneValid(phone));
+        do {
+            System.out.println("Enter the email: ");
+            email = input.nextLine();
+        } while (!valid.isEmailvalid(email));
+        System.out.println("Enter the address: ");
+        String address = input.nextLine();
+        String[] inputArr = {name, dateStr, gender, phone, email, address};
+        return inputArr;
+    }
+
+    private boolean isIDexist(String id){
+       ArrayList<Lead> LeadList = getLeadList();
+       for (Lead lead: LeadList){
+           if (lead.getId().equals(id))
+               return true;
+       }
+       System.out.println("Id doest not exist");
+       return false;
     }
 
     @Override
@@ -63,75 +106,46 @@ public class LeadManager implements Manager{
 
     @Override
     public void create() {
-        InputValidate valid = new InputValidate();
-        String email = "";
-        String dateStr = "";
-        String gender = "";
-        String phone = "";
-        Scanner input = new Scanner(System.in);
-        InputHandler handler = new InputHandler();
         String id = handler.idGenerator("lead_", getLastID());
-        System.out.println("Enter the name: ");
-        String name = input.nextLine();
-        do {
-            System.out.println("Enter the date of birth: ");
-            dateStr = input.nextLine();
-        } while(!valid.isDateValid(dateStr));
-        Date dob = handler.DateConverter(dateStr);
-        do {
-            System.out.println("Enter the gender: ");
-            gender = input.nextLine();
-        } while(!valid.isGenderValid(gender));
-        do {
-            System.out.println("Enter the phone number: ");
-            phone = input.nextLine();
-        } while(!valid.isPhoneValid(phone));
-        do {
-            System.out.println("Enter the email: ");
-            email = input.nextLine();
-        } while (!valid.isEmailvalid(email));
-        System.out.println("Enter the address: ");
-        String address = input.nextLine();
-        Lead lead = new Lead(id, name, dob, gender, phone, email, address);
+        String[] inputArr = inputRetriever();
+        InputHandler handler = new InputHandler();
+        Lead lead = new Lead(id, inputArr[0], handler.DateConverter(inputArr[1]), inputArr[2], inputArr[3], inputArr[4], inputArr[5]);
         fm.appendToFile("lead.csv", lead.toString());
     }
 
     @Override
     public void update() {
         ArrayList <Lead> LeadList = getLeadList();
+        int updatePos = 0;
+        String id;
         InputHandler handler = new InputHandler();
         Scanner input = new Scanner(System.in);
-        System.out.println("Enter the number of lead that you want to update: ");
-        int numInt = input.nextInt();
-        int updatePos = numInt - 1;
-        input.nextLine();
-        String id = handler.idGenerator("lead_", numInt);
+        do {
+            System.out.println("Enter the number of lead that you want to update: ");
+            int numInt = input.nextInt();
+            updatePos = numInt - 1;
+            input.nextLine();
+            id = handler.idGenerator("lead_", numInt);
+        } while (!isIDexist(id));
         System.out.println(getLeadList().get(updatePos));
-        System.out.println("Enter the name: ");
-        String name = input.nextLine();
-        System.out.println("Enter the date of birth: ");
-        String dateStr = input.nextLine();
-        Date dob = handler.DateConverter(dateStr);
-        System.out.println("Enter the gender: ");
-        String gender = input.nextLine();
-        System.out.println("Enter the phone number: ");
-        String phone = input.nextLine();
-        System.out.println("Enter the email: ");
-        String email = input.nextLine();
-        System.out.println("Enter the address: ");
-        String address = input.nextLine();
-        Lead lead = new Lead(id, name, dob, gender, phone, email, address);
+        String[] inputArr = inputRetriever();
+        Lead lead = new Lead(id, inputArr[0], handler.DateConverter(inputArr[1]), inputArr[2], inputArr[3], inputArr[4], inputArr[5]);
         LeadList.set(updatePos, lead);
         writeToFile(LeadList);
     }
 
     @Override
     public void delete() {
+        int lead_pos = 0;
+        String id = "";
         Scanner input = new Scanner(System.in);
         ArrayList<Lead> LeadList = getLeadList();
-        System.out.println("Enter the lead number that you want to delete: ");
-        int lead_pos = input.nextInt() - 1;
-        input.nextLine();
+        do {
+            System.out.println("Enter the lead number that you want to delete: ");
+            lead_pos = input.nextInt() - 1;
+            input.nextLine();
+            id = handler.idGenerator("lead_", (lead_pos + 1));
+        } while (!isIDexist(id));
         System.out.println("Do you want to delete the lead: [" + getLeadList().get(lead_pos)+ "]? (Y/N): ");
         String decision = input.nextLine();
         if (decision.equals("Y")){

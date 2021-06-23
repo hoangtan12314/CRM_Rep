@@ -20,7 +20,7 @@ public class FileManager {
         File file = new File(filename);
         try {
             FileWriter fw = new FileWriter(filename, true);
-            fw.write("\n" + content);
+            fw.write(content + "\n");
             fw.close();
         } catch (IOException e){
             e.printStackTrace();
